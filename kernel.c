@@ -3,6 +3,14 @@
 #define MEMORY_END 0x1000000  // 16MB of memory
 #define PAGE_SIZE 4096
 #define ERROR_STRING "\033[31m[ERROR]\033[0m "
+// Add this near the top of your kernel.c (before other code)
+
+__attribute__((section(".multiboot")))
+unsigned int multiboot_header[] = {
+    0x1BADB002,         // magic number
+    0x00000000,         // flags (set to 0 for now)
+    -(0x1BADB002 + 0x00000000) // checksum (magic + flags must sum to zero)
+};
 
 // Function prototypes
 void terminal_initialize(void);

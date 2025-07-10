@@ -4,7 +4,12 @@ OUTPUT_ARCH(i386)
 
 SECTIONS
 {
-    . = 0x1000;    /* Changed to match bootloader's KERNEL_OFFSET */
+    . = 0x100000;    /* Load address at 1MB, standard for protected mode kernels */
+
+    .multiboot : {
+        *(.multiboot) /* Multiboot header goes here */
+    }
+
     .text : {
         *(.text)
     }
@@ -18,3 +23,4 @@ SECTIONS
         *(.bss)
     }
 }
+
